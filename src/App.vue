@@ -1,5 +1,5 @@
 <template>
-<Navbar/>
+<Navbar :isLoggedIn="isLoggedIn"/>
   <router-view/>
 
 </template>
@@ -9,6 +9,11 @@ import Navbar from './components/Navbar'
 export default {
   components:{
     Navbar
+  },
+  data(){
+    return{
+      isLoggedIn: false
+    }
   }
 
 };

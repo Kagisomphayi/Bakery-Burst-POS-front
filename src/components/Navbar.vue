@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark shadow">
     <div class="container-fluid">
       <a class="navbar-brand" href="#"></a>
       <button
@@ -17,37 +17,39 @@
         <ul class="navbar-nav ms-md-auto gap-2">
           <li class="nav-item rounded">
             <a class="nav-link" aria-current="page" href="#"
-              ><router-link to="/">Home</router-link></a
+              ><router-link class="nav-text" to="/">Home</router-link></a
+            >
+          </li>
+          <li class="nav-item rounded" v-if="!isLoggedIn">
+            <a class="nav-link" href="#"
+              ><router-link class="nav-text" to="/products"
+                >Products</router-link
+              ></a
+            >
+          </li>
+          <li class="nav-item rounded" v-if="!isLoggedIn">
+            <a class="nav-link" href="#"
+              ><router-link class="nav-text" to="/cart"
+                >Cart</router-link
+              ></a
             >
           </li>
           <li class="nav-item rounded">
             <a class="nav-link" href="#"
-              ><router-link to="/about">About</router-link></a
+              ><router-link class="nav-text" to="/login">Login</router-link></a
             >
           </li>
+
           <li class="nav-item rounded">
             <a class="nav-link" href="#"
-              ><router-link to="/products">Products</router-link></a
+              ><router-link class="nav-text" to="/register"
+                >Register</router-link
+              ></a
             >
           </li>
-          <li class="nav-item rounded">
-            <a class="nav-link" href="#"
-              ><router-link to="/login">Login</router-link></a
-            >
-          </li>
-          <li class="nav-item rounded">
-            <a class="nav-link" href="#"
-              ><router-link to="/register">Register</router-link></a
-            >
-          </li>
-          <li class="nav-item rounded">
-            <a class="nav-link" href="#"
-              ><router-link to="/register">Contact us</router-link></a
-            >
-          </li>
-          <li class="nav-item dropdown rounded">
+          <li class="nav-item dropdownrounded" v-if="!isLoggedIn">
             <a
-              class="nav-link dropdown-toggle"
+              class="nav-link nav-text dropdown-toggle"
               href="#"
               id="navbarDropdown"
               role="button"
@@ -74,9 +76,27 @@
 
 <script>
 export default {
-
-    
+  
 };
 </script>
 
-<style></style>
+<style>
+nav {
+  position: fixed !important;
+  width: 100%;
+  background-color: rgb(255 212 0);
+  z-index: 90;
+}
+
+.nav-text {
+  color: rgb(0, 0, 0) !important;
+  text-shadow: rgb(255, 102, 102) !important;
+  font-size: 25px;
+}
+
+.nav-text:hover {
+  color: white !important;
+  text-shadow: rgb(255, 102, 102) !important;
+  font-size: 25px;
+}
+</style>

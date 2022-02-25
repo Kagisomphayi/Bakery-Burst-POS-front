@@ -1,104 +1,159 @@
 <template>
-      <form @submit.prevent="register" class="form neu-border">
-    <h2 class="form-heading">Register</h2>
-    <input
-      class="form-input neu-border-inset"
-      type="text"
-      v-model="name"
-      placeholder="Name"
-    />
-    <input
-      class="form-input neu-border-inset"
-      type="email"
-      v-model="email"
-      placeholder="Email"
-    />
-    <input
-      class="form-input neu-border-inset"
-      type="text"
-      v-model="contact"
-      placeholder="Contact Number"
-    />
-    <input
-      class="form-input neu-border-inset"
-      type="password"
-      v-model="password"
-      placeholder="Password"
-    />
-    <button type="submit" class="form-btn neu-border">Sign up</button>
-    <div class="form-social-login">
-      <button class="form-btn neu-border form-social-btn">
-        <i class="fab fa-google"></i>
-      </button>
-      <button class="form-btn neu-border form-social-btn">
-        <i class="fab fa-facebook-f"></i>
-      </button>
+  <section class="contact-background" id="contact">
+    <h2 class="text-center display-6 fw-bold mb-3 subtitlee">
+      <u>Register</u>
+    </h2>
+    <div class="cont container">
+      <div class="justify-content-center formm">
+        <form @submit.prevent="register" class="contactMe">
+          <label class="text-black">Name:</label>
+          <input
+            class="form-input neu-border-inset"
+            type="text"
+            v-model="name"
+          />
+          <label class="text-black">Email:</label>
+          <input
+            class="form-input neu-border-inset"
+            type="email"
+            v-model="email"
+          />
+
+          <label class="text-black">Contact:</label>
+          <input
+            class="form-input neu-border-inset"
+            type="text"
+            v-model="contact"
+          />
+
+          <label class="text-black">Password:</label>
+          <input
+            class="form-input neu-border-inset"
+            type="password"
+            v-model="password"
+          />
+
+          <div class="submit mb-3">
+            <button type="Submit" class="mb-3 btn button-body">
+              <h5 id="sub" class="text-black mb-0">Submit</h5>
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
-
-
-  </form>
-
+  </section>
 </template>
 
 <script>
-
-
 export default {
-
-}
+  data() {
+    return {
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+    };
+  },
+  methods: {
+    handleSubmit() {
+      fetch({
+        method: "POST",
+        body: JSON.stringify({
+          name: this.name,
+          email: this.email,
+          subject: this.subject,
+          message: this.message,
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => console.log(json));
+    },
+  },
+};
 </script>
 
 <style scoped>
-.neu-border {
-  border-radius: 30px;
-  background: #f5f5f5;
-  box-shadow: 8px 8px 15px #e4e4e4, -8px -8px 15px #ffffff;
-}
-.neu-border-inset {
-  border-radius: 30px;
-  background: #f5f5f5;
-  box-shadow: inset 8px 8px 15px #e4e4e4, inset -8px -8px 15px #ffffff;
+section{
+  padding-top: 50px;
 }
 
-.form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 40px;
-  gap: 20px;
-  width: 100%;
-  max-width: 600px;
-  margin-inline: auto;
+form {
+  max-width: 100%;
+  margin: 30px auto;
+  text-align: left;
+  border-radius: 10px;
 }
-
-.form-heading {
-  text-align: center;
+label {
+  color: rgb(0, 0, 0);
+  display: inline-block;
+  margin: 25px 0 15px;
   text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
 }
-
-.form-input,
-.form-btn {
+input {
+  display: block;
+  padding: 10px 6px;
+  width: 100%;
+  box-sizing: border-box;
   border: none;
-  outline: none;
-  padding: 20px;
+  border-bottom: 1px solid #ddd;
+  color: rgb(255, 255, 255);
+  background-color: rgba(0, 0, 0, 0.25);
 }
-
-.form-btn {
+.button-body {
+  background: #fdfdfd;
+  border: 0;
+  padding: 10px 20px;
+  margin-top: 20px;
+  color: rgb(0, 0, 0);
+  border-radius: 10px;
   cursor: pointer;
-  transition: all 0.1s linear;
 }
-
-.form-btn:hover {
-  transform: scale(1.05);
+button:hover {
+  opacity: 0.8;
+  background: #000000;
 }
-
-.form-social-login {
+.submit {
+  text-align: center;
+}
+#sub:hover {
+  color: rgb(255, 255, 255) !important;
+}
+#sub {
+  color: white;
+}
+.error {
+  color: #ff0062;
+  margin-top: 10px;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+.contactMe {
+  width: 100%;
+  margin: 0px;
+}
+.contact-icons {
+  font-size: 20px !important;
+}
+.formm {
+  width: 70%;
+}
+.cont {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: center !important;
+}
+.subtitlee {
+  padding-top: 50px;
 }
 
-.form-social-btn {
-  width: 45%;
-  color: #333;
+@media all and (max-width: 800px) {
+.formm {
+  width: 100%;
+}
 }
 </style>

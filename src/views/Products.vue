@@ -6,8 +6,10 @@
     </div>
     <div class="container">
       <div class="pb-5 justify-content-center">
-        <h1 class="text-center display-6 fw-bold subtitlee mb-5"><u>Products</u></h1>
-
+        <h1 class="text-center display-6 fw-bold subtitlee"><u>Projects</u></h1>
+        <p class="text-center text-muted mb-5">
+          Below are some of the projects I've done
+        </p>
         <div class="row col-lg-12 proji" style="row-gap: 30px">
           <div
             v-for="project of projects"
@@ -20,6 +22,12 @@
               <div class="card-body">
                 <h4 class="card-title text-white">{{ project.title }}</h4>
                 <p class="card-text text-white">{{ project.description }}</p>
+
+                <!-- <ul class="list-group px-0 list-group-flush">
+                <li class="list-group-item">{{project.html}}</li>
+                <li class="list-group-item">{{project.css}}</li>
+                <li class="list-group-item">{{project.js}}</li>
+              </ul> -->
               </div>
 
               <div class="card-body">
@@ -30,7 +38,7 @@
                 >
                 <a target="_blank" :href="project.github" class="card-link"
                   ><button class="btn mt-0 rounded-pill">
-                  
+                    Github
                   </button></a
                 >
               </div>
@@ -53,7 +61,7 @@ export default {
     };
   },
   mounted() {
-    fetch("https://kagisomphayiportfolio.herokuapp.com/projects")
+    fetch()
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
