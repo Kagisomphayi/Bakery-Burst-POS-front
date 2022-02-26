@@ -1,11 +1,12 @@
 <template>
   <section class="contact-background" id="contact">
-    <h2 class="text-center display-6 fw-bold mb-3 subtitlee">
-      <u>Register</u>
-    </h2>
     <div class="cont container">
       <div class="justify-content-center formm">
-        <form @submit.prevent="register" class="contactMe">
+        <form @submit.prevent="register" class="contactMe container">
+          <h2 class="text-center display-6 fw-bold mb-3 subtitlee">
+            <u>Register</u>
+          </h2>
+
           <label class="text-black">Name:</label>
           <input
             class="form-input neu-border-inset"
@@ -35,7 +36,7 @@
 
           <div class="submit mb-3">
             <button type="Submit" class="mb-3 btn button-body">
-              <h5 id="sub" class="text-black mb-0">Submit</h5>
+              <h5 id="sub" class="text-black mb-0">Register</h5>
             </button>
           </div>
         </form>
@@ -50,33 +51,20 @@ export default {
     return {
       name: "",
       email: "",
-      subject: "",
-      message: "",
+      contact: "",
+      password: ""
     };
   },
   methods: {
-    handleSubmit() {
-      fetch({
-        method: "POST",
-        body: JSON.stringify({
-          name: this.name,
-          email: this.email,
-          subject: this.subject,
-          message: this.message,
-        }),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      })
-        .then((response) => response.json())
-        .then((json) => console.log(json));
+    register() {
+      console.log(this.name, this.email, this.contact, this.password);
     },
   },
 };
 </script>
 
 <style scoped>
-section{
+section {
   padding-top: 50px;
 }
 
@@ -85,6 +73,7 @@ form {
   margin: 30px auto;
   text-align: left;
   border-radius: 10px;
+  background-color: white;
 }
 label {
   color: rgb(0, 0, 0);
@@ -99,19 +88,19 @@ input {
   padding: 10px 6px;
   width: 100%;
   box-sizing: border-box;
-  border: none;
-  border-bottom: 1px solid #ddd;
-  color: rgb(255, 255, 255);
-  background-color: rgba(0, 0, 0, 0.25);
+  border: 1px solid #ddd;
+  color: rgb(0, 0, 0);
+  background-color: rgba(233, 221, 221, 0.25);
 }
 .button-body {
-  background: #fdfdfd;
+  background: rgb(255 212 0);
   border: 0;
   padding: 10px 20px;
   margin-top: 20px;
   color: rgb(0, 0, 0);
   border-radius: 10px;
   cursor: pointer;
+  margin-bottom: 50px !important;
 }
 button:hover {
   opacity: 0.8;
@@ -140,7 +129,8 @@ button:hover {
   font-size: 20px !important;
 }
 .formm {
-  width: 70%;
+  width: 50%;
+   margin-top: 70px;
 }
 .cont {
   display: flex;
@@ -152,8 +142,8 @@ button:hover {
 }
 
 @media all and (max-width: 800px) {
-.formm {
-  width: 100%;
-}
+  .formm {
+    width: 100%;
+  }
 }
 </style>

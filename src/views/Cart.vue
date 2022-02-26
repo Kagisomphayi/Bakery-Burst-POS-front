@@ -1,70 +1,27 @@
 <template>
-  <!-- projects section -->
-  <section id="projects" class="products">
-    <div class="container hr">
-      <hr class="bg-white" />
-    </div>
-    <div class="container">
-      <div class="pb-5 justify-content-center">
-        <h1 class="text-center display-6 fw-bold subtitlee mb-5"><u>Products</u></h1>
-
-        <div class="row col-lg-12 proji" style="row-gap: 30px">
-          <div
-            v-for="project of projects"
-            :key="project.title"
-            class="col-lg-3 col-md-6"
-            style="display: flex; justify-content: center"
-          >
-            <div class="card shadow ani-card" style="width: 18rem">
-              <img :src="project.img" class="card-img-top" alt="..." />
-              <div class="card-body">
-                <h4 class="card-title text-white">{{ project.title }}</h4>
-                <p class="card-text text-white">{{ project.description }}</p>
-              </div>
-
-              <div class="card-body">
-                <a target="_blank" :href="project.netlify" class="card-link"
-                  ><button class="btn mt-0 rounded-pill">
-                    Netlify
-                  </button></a
-                >
-                <a target="_blank" :href="project.github" class="card-link"
-                  ><button class="btn mt-0 rounded-pill">
-                  
-                  </button></a
-                >
-              </div>
-            </div>
-          </div>
-        </div>
+  <div>
+    <h1>Your Cart</h1>
+    <div class="products">
+      <div v-for="(product, index) in cart" :key="index">
+        <h3>{{product.name}}</h3>
+        <img :src="product.image" />
+        <div>{{product.cost}}</div>
+        <button v-on:click="deleteFromCart(product)">Remove from cart</button>
       </div>
     </div>
-    <div class="container hr">
-      <hr class="bg-white" />
-    </div>
-  </section>
+  </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      projects: null,
-    };
-  },
-  mounted() {
-    fetch("https://kagisomphayiportfolio.herokuapp.com/projects")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        this.projects = data;
-      });
-  },
+  props: ["cart"],
+  methods: {
+    deleteFromCart(product) {
+      this.$emit("removeItemFromCart", product);
+    }
+  }
 };
 </script>
 
-<style scoped>
-.products{
-  padding-top: 50px;
-}
+<style>
 </style>

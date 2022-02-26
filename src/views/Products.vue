@@ -6,10 +6,7 @@
     </div>
     <div class="container">
       <div class="pb-5 justify-content-center">
-        <h1 class="text-center display-6 fw-bold subtitlee"><u>Projects</u></h1>
-        <p class="text-center text-muted mb-5">
-          Below are some of the projects I've done
-        </p>
+        <h1 class="text-center display-6 mb-5 fw-bold subtitlee"><u>Products</u></h1>
         <div class="row col-lg-12 proji" style="row-gap: 30px">
           <div
             v-for="project of projects"
@@ -18,29 +15,37 @@
             style="display: flex; justify-content: center"
           >
             <div class="card shadow ani-card" style="width: 18rem">
-              <img :src="project.img" class="card-img-top" alt="..." />
+              <img :src="project" class="card-img-top" alt="..." />
               <div class="card-body">
-                <h4 class="card-title text-white">{{ project.title }}</h4>
-                <p class="card-text text-white">{{ project.description }}</p>
+                <h4 class="card-title text-black">{{ project.title }}</h4>
+                <p class="card-text text-black">{{ project.description }}</p>
 
-                <!-- <ul class="list-group px-0 list-group-flush">
-                <li class="list-group-item">{{project.html}}</li>
-                <li class="list-group-item">{{project.css}}</li>
-                <li class="list-group-item">{{project.js}}</li>
-              </ul> -->
               </div>
 
-              <div class="card-body">
-                <a target="_blank" :href="project.netlify" class="card-link"
-                  ><button class="btn mt-0 rounded-pill">
-                    Netlify
-                  </button></a
+              <div class="card-body text-center">
+                <input type="number"  min=1 value=1 id="addToCartt${position}" style="width:35px; height:37px;">
+                <button
+                  type="button"
+                  class="btn mx-2  card-btn btn-success"
+                  onclick="addtocart(${position})"
                 >
-                <a target="_blank" :href="project.github" class="card-link"
-                  ><button class="btn mt-0 rounded-pill">
-                    Github
-                  </button></a
+                  <i class="bi bi-cart2"></i>
+                </button>
+                <button
+                  type="button"
+                  class="btn card-btn  btn-primary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#editProduct${position}"
                 >
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button
+                  type="button"
+                  class="btn mx-2 card-btn btn-danger "
+                  onclick="deleteProduct(${position})"
+                >
+                 <i class="bi bi-trash3"></i>
+                </button>
               </div>
             </div>
           </div>
@@ -60,19 +65,35 @@ export default {
       projects: null,
     };
   },
+
   mounted() {
-    fetch()
+    fetch("https://kagisomphayiportfolio.herokuapp.com/projects")
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
         this.projects = data;
       });
   },
+
+  methods: {
+    addToCart(product) {
+      this.$emit("addToCart", product);
+    },
+  },
 };
 </script>
 
 <style scoped>
-.products{
+.products {
   padding-top: 50px;
+}
+.card{
+  border-radius: 10px;
+}
+.subtitlee{
+  margin-top:70px ;
+}
+.card-img-top{
+    border-radius: 10px;
 }
 </style>

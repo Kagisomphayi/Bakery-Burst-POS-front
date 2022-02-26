@@ -34,28 +34,28 @@
               ></a
             >
           </li>
-          <li class="nav-item rounded">
+          <li class="nav-item login-text rounded">
             <a class="nav-link" href="#"
-              ><router-link class="nav-text" to="/login">Login</router-link></a
+              ><router-link class=" nav-text" to="/login">Login</router-link></a
             >
           </li>
 
-          <li class="nav-item rounded">
+          <li class="nav-item register-text rounded">
             <a class="nav-link" href="#"
-              ><router-link class="nav-text" to="/register"
+              ><router-link class=" nav-text " to="/register"
                 >Register</router-link
               ></a
             >
           </li>
           <li class="nav-item dropdownrounded" v-if="!isLoggedIn">
             <a
-              class="nav-link nav-text dropdown-toggle"
+              class="nav-link nav-text text-black dropdown-toggle"
               href="#"
               id="navbarDropdown"
               role="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
-              ><i class="bi bi-person-fill me-2"></i>Profile</a
+              ><i class="bi bi-person-fill me-2 "></i>Profile</a
             >
             <ul
               class="dropdown-menu dropdown-menu-end"
@@ -76,7 +76,7 @@
 
 <script>
 export default {
-  
+
 };
 </script>
 
@@ -89,14 +89,24 @@ nav {
 }
 
 .nav-text {
-  color: rgb(0, 0, 0) !important;
+  color: rgb(0, 0, 0) ;
   text-shadow: rgb(255, 102, 102) !important;
   font-size: 25px;
 }
 
 .nav-text:hover {
-  color: white !important;
+  color: rgb(255, 255, 255) !important;
   text-shadow: rgb(255, 102, 102) !important;
   font-size: 25px;
 }
+
+.login-text{
+  background-color: rgb(126, 126, 126);
+  border-radius: 10px !important;
+}
+.register-text{
+  background-color: rgb(126, 126, 126);
+  border-radius: 10px !important;
+}
+a{text-decoration: none;}
 </style>

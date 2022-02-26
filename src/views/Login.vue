@@ -1,58 +1,28 @@
 
-<!-- <div class="login-form">
-    <form @submit.prevent="login" class="form neu-border">
-    <h2 class="form-heading">Login</h2>
-    <input
-      class="form-input neu-border-inset"
-      type="email"
-      v-model="email"
-      placeholder="Email"
-    />
-    <input
-      class="form-input neu-border-inset"
-      type="password"
-      v-model="password"
-      placeholder="Password"
-    />
-    <button type="submit" class="form-btn neu-border">Sign in</button>
-    <div class="form-social-login">
-      <button class="form-btn neu-border form-social-btn">
-        <i class="fab fa-google"></i>
-      </button>
-      <button class="form-btn neu-border form-social-btn">
-        <i class="fab fa-facebook-f"></i>
-      </button>
-    </div>
-
-  </form>
-</div> -->
-
-
 <template>
   <section class="contact-background" id="contact">
-    <h2 class="text-center display-6 fw-bold mb-3 subtitlee">
-      <u>LogIn</u>
-    </h2>
     <div class="cont container">
       <div class="justify-content-center formm">
-        <form @submit.prevent="register" class="contactMe">
+        <form @submit.prevent="Login" class="contactMe container mt-5">
+          <h2 class="text-center display-6 fw-bold mb-3  subtitlee">
+            <u>LogIn</u>
+          </h2>
+          <label class="text-black">Email:</label>
           <input
-            class="form-input neu-border-inset mb-5 mt-5"
+            class="form-input neu-border-inset"
             type="email"
             v-model="email"
-            placeholder="Email"
           />
-
+          <label class="text-black">Password:</label>
           <input
             class="form-input neu-border-inset"
             type="password"
             v-model="password"
-            placeholder="Password"
           />
 
           <div class="submit mb-3">
             <button type="Submit" class="mb-3 btn button-body">
-              <h5 id="sub" class="text-black mb-0">Submit</h5>
+              <h5 id="sub" class="text-black mb-0">Login</h5>
             </button>
           </div>
         </form>
@@ -98,6 +68,8 @@ form {
   margin: 30px auto;
   text-align: left;
   border-radius: 10px;
+  background-color: white;
+ 
 }
 label {
   color: rgb(0, 0, 0);
@@ -112,19 +84,19 @@ input {
   padding: 10px 6px;
   width: 100%;
   box-sizing: border-box;
-  border: none;
-  border-bottom: 1px solid #ddd;
-  color: rgb(255, 255, 255);
-  background-color: rgba(0, 0, 0, 0.25);
+  border: 1px solid #ddd;
+  color: rgb(0, 0, 0);
+  background-color: rgba(233, 221, 221, 0.25);
 }
 .button-body {
-  background: #fdfdfd;
+  background: rgb(255 212 0);
   border: 0;
   padding: 10px 20px;
   margin-top: 20px;
   color: rgb(0, 0, 0);
   border-radius: 10px;
   cursor: pointer;
+  margin-bottom:50px !important;
 }
 button:hover {
   opacity: 0.8;
@@ -153,18 +125,38 @@ button:hover {
   font-size: 20px !important;
 }
 .formm {
-  width:70%;
+  width: 50%;
+   margin-top: 70px;
 }
 .cont {
   display: flex;
   flex-wrap: wrap;
   justify-content: center !important;
 }
-.subtitlee {
-  padding-top: 50px;
+
+.subtitlee{
+  padding-top: 50px !important;
+}
+@media all and (max-width: 991px) {
+  .formm {
+  width: 60%;
+   margin-top: 70px;
+}
 }
 
-@media all and (max-width: 415px) {
+@media all and (max-width: 768px) {
+  .formm {
+  width: 70%;
+   margin-top: 70px;
+}
+}
 
+@media all and (max-width: 576px) {
+  .formm {
+  width: 80%;
+   margin-top: 70px;
+}
+}
+@media all and (max-width: 400px) {
 }
 </style>
