@@ -52,12 +52,32 @@ export default {
       name: "",
       email: "",
       contact: "",
-      password: ""
+      password: "",
     };
   },
   methods: {
     register() {
-      console.log(this.name, this.email, this.contact, this.password);
+      fetch("https://generic-blog-api.herokuapp.com/users", {
+        method: "POST",
+        body: JSON.stringify({
+          name: this.name,
+          email: this.email,
+          contact: this.contact,
+          password: this.password,
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          alert("User registered");
+          localStorage.setItem("jwt", json.jwt);
+          this.$router.push({ name: "Blogs" });
+        })
+        .catch((err) => {
+          alert(err);
+        });
     },
   },
 };
@@ -130,7 +150,7 @@ button:hover {
 }
 .formm {
   width: 50%;
-   margin-top: 70px;
+  margin-top: 70px;
 }
 .cont {
   display: flex;

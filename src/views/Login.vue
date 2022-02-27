@@ -35,28 +35,31 @@
 export default {
   data() {
     return {
-      name: "",
       email: "",
-      subject: "",
-      message: "",
+      password: "",
     };
   },
   methods: {
-    handleSubmit() {
-      fetch("https://kagisomphayiportfolio.herokuapp.com/contact", {
-        method: "POST",
+    login() {
+      fetch("https://generic-blog-api.herokuapp.com/users", {
+        method: "PATCH",
         body: JSON.stringify({
-          name: this.name,
           email: this.email,
-          subject: this.subject,
-          message: this.message,
+          password: this.password,
         }),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
         },
       })
         .then((response) => response.json())
-        .then((json) => console.log(json));
+        .then((json) => {
+          localStorage.setItem("jwt", json.jwt);
+          alert("User logged in");
+          this.$router.push({ name: "Blogs" });
+        })
+        .catch((err) => {
+          alert(err);
+        });
     },
   },
 };
