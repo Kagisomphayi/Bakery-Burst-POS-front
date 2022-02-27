@@ -83,6 +83,7 @@ export default {
 <style>
 nav {
   position: fixed !important;
+  top: 0%;
   width: 100%;
   background-color: rgb(255 212 0);
   z-index: 90;
