@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark shadow">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#"></a>
+      <a class="navbar-brand zoom" href="#"><router-link class="nav-text" to="/"><img class="logo" src="../assets/logo.png" alt=""></router-link> </a>
       <button
         class="navbar-toggler"
         type="button"
@@ -17,23 +17,24 @@
         <ul class="navbar-nav ms-md-auto gap-2">
           <li class="nav-item rounded">
             <a class="nav-link" aria-current="page" href="#"
-              ><router-link class="nav-text" to="/">Home</router-link></a
+              ><router-link class="nav-text" to="/"><i class="bi bi-house-door"></i>Home</router-link></a
             >
           </li>
           <li class="nav-item rounded" v-if="!isLoggedIn">
             <a class="nav-link" href="#"
               ><router-link class="nav-text" to="/products"
-                >Products</router-link
+                ><i class="bi bi-bag"></i>Products</router-link
               ></a
             >
           </li>
           <li class="nav-item rounded" v-if="!isLoggedIn">
             <a class="nav-link" href="#"
               ><router-link class="nav-text" to="/cart"
-                >Cart</router-link
+                ><i class="bi bi-cart-check"></i>Cart </router-link
               ></a
             >
           </li>
+          
           <li class="nav-item login-text rounded">
             <a class="nav-link" href="#"
               ><router-link class=" nav-text" to="/login">Login</router-link></a
@@ -47,6 +48,7 @@
               ></a
             >
           </li>
+          
           <li class="nav-item dropdownrounded" v-if="!isLoggedIn">
             <a
               class="nav-link nav-text text-black dropdown-toggle"
@@ -61,7 +63,7 @@
               class="dropdown-menu dropdown-menu-end"
               aria-labelledby="navbarDropdown"
             >
-              <li><a class="dropdown-item" href="#">Account</a></li>
+              <li><a class="dropdown-item" href="#"><router-link class="" to="/account">View Profile</router-link></a></li>
               <li>
                 <hr class="dropdown-divider" />
               </li>
@@ -80,7 +82,24 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+
+
+.zoom {
+  transition: transform .2s;
+  margin: 0 auto;
+}
+
+.zoom:hover {
+  -ms-transform: scale(1.5); /* IE 9 */
+  -webkit-transform: scale(1.5); /* Safari 3-8 */
+  transform: scale(1.5); 
+}
+
+
+.logo {
+width:70px;
+   }
 nav {
   position: fixed !important;
   top: 0%;
