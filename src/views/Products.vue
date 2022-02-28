@@ -29,59 +29,90 @@
                 <option value="ascending">Ascending</option>
                 <option value="descending">Descending</option>
               </select>
-              
 
-            <!-- Button trigger modal -->
-            <button type="button" class="btn mt-4 button-body" data-bs-toggle="modal" data-bs-target="#addProductModal">
-             <p class="sub">Add a product</p> 
-            </button>
+              <!-- Button trigger modal -->
+              <button
+                type="button"
+                class="btn mt-4 button-body"
+                data-bs-toggle="modal"
+                data-bs-target="#addProductModal"
+              >
+                <p class="sub">Add a product</p>
+              </button>
 
-
-            <!-- Modal -->
-            <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-              aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">
-                      Add product
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <div class="mb-3">
-                      <label for="addTitle" class="form-label">Title</label>
-                      <input class="form-control" type="text" name="addTitle" id="addTitle" />
+              <!-- Modal -->
+              <div
+                class="modal fade"
+                id="addProductModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+                @submit.prevent="createProduct"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">
+                        Add product
+                      </h5>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
                     </div>
-                    <div class="mb-3">
-                      <label for="" class="form-label">Category</label>
-                      <select class="form-select" name="addCategory" id="addCategory">
-                        <option value="Shoes">Shoes</option>
-                        <option value="Accessories">Accessories</option>
-                        <option value="Clothing">Clothing</option>
-                      </select>
+                    <div class="modal-body">
+                      <div class="mb-3">
+                        <label for="addTitle" class="form-label">Name</label>
+                        <input
+                          class="form-control"
+                          type="text"
+                          name="addName"
+                          id="addName"
+                          v-model="name"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label for="addPrice" class="form-label">Price</label>
+                        <input
+                          class="form-control"
+                          type="text"
+                          name="addPrice"
+                          id="addPrice"
+                          v-model="price"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label for="addImg" class="form-label">Image</label>
+                        <input
+                          class="form-control"
+                          type="text"
+                          name="addImg"
+                          id="addImg"
+                          v-model="image"
+                        />
+                      </div>
                     </div>
-                    <div class="mb-3">
-                      <label for="addPrice" class="form-label">Price</label>
-                      <input class="form-control" type="text" name="addPrice" id="addPrice" />
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button
+                        type="submit"
+                        class="btn btn-primary"
+                        data-bs-dismiss="modal"
+                      >
+                        Create Product
+                      </button>
                     </div>
-                    <div class="mb-3">
-                      <label for="addImg" class="form-label">Image URL</label>
-                      <input class="form-control" type="text" name="addImg" id="addImg" />
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                      Close
-                    </button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="createProduct()">
-                      Create Product
-                    </button>
                   </div>
                 </div>
               </div>
-            </div>
-
             </div>
           </div>
         </div>
@@ -131,7 +162,7 @@
                 <button
                   type="button"
                   class="btn border-dark mx-2 card-btn"
-                  onclick="deleteProduct(${position})"
+                  v-on:click="removeProduct(index)"
                 >
                   <i class="bi bi-trash3"></i>
                 </button>
@@ -148,6 +179,9 @@
 export default {
   data() {
     return {
+      name: "",
+      price: "",
+      image: "",
       cart: [],
       products: [
         {
@@ -184,38 +218,26 @@ export default {
     };
   },
 
-  // export default {
-  //   data() {
-  //     return {
-  //       projects: null,
-  //     };
-  //   },
 
-  //   mounted() {
-  //     fetch("https://kagisomphayiportfolio.herokuapp.com/projects")
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         console.log(data);
-  //         this.projects = data;
-  //       });
-  //   },
 
   methods: {
-        addToCart(index) {
+
+    // ADD TO CART
+    addToCart(index) {
       this.cart.push(index);
     },
-addToCart() {
-fetch('', {
-  method: 'POST',
-  body: JSON.stringify({
-    name: 'Yellow Butter Cake',
-    cost: '',
-    image: 1,
-  }),
-  headers: {
-    'Content-type': 'application/json; charset=UTF-8',
-  },
-})
+    addToCart() {
+      fetch("", {
+        method: "POST",
+        body: JSON.stringify({
+          name: "Yellow Butter Cake",
+          cost: "",
+          image: 1,
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
         .then((res) => {
           if (res.status == 201) {
             swal({
@@ -226,6 +248,39 @@ fetch('', {
         })
         .catch((err) => console.log("err", err));
     },
+
+    // CREATE PRODUCT
+    createProduct() {
+      if (!localStorage.getItem("jwt")) {
+        alert("User not logged in");
+        return this.$router.push({ name: "Login" });
+      }
+      fetch("", {
+        method: "POST",
+        body: JSON.stringify({
+          name: this.name,
+          price: this.price,
+          image: this.image,
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          alert("Post Created");
+          this.$router.push({ name: "Blogs" });
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    },
+  // DELETE PRODUCT
+    removeProduct: function (index) {
+    this.items.splice(index, 1);
+  }
+
   },
 };
 </script>
