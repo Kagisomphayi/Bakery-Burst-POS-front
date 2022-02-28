@@ -1,10 +1,9 @@
-
 <template>
   <section class="contact-background" id="contact">
     <div class="cont container">
       <div class="justify-content-center formm">
         <form @submit.prevent="Login" class="contactMe container mt-5">
-          <h2 class="text-center display-6 fw-bold mb-3  subtitlee">
+          <h2 class="text-center display-6 fw-bold mb-3 subtitlee">
             <u>LogIn</u>
           </h2>
           <label class="text-black">Email:</label>
@@ -20,10 +19,18 @@
             v-model="password"
           />
 
-          <div class="submit mb-3">
+          <div class="submit ">
             <button type="Submit" class="mb-3 btn button-body">
               <h5 id="sub" class="text-black mb-0">Login</h5>
             </button>
+          </div>
+          <div>
+            <p class="pb-4">
+              Not a member?
+              <router-link :to="{ name: 'Register' }"
+                >Create an account</router-link
+              >
+            </p>
           </div>
         </form>
       </div>
@@ -41,7 +48,7 @@ export default {
   },
   methods: {
     login() {
-      fetch("https://generic-blog-api.herokuapp.com/users", {
+      fetch("heroku git:remote -a kagisomphayi-personal-blog", {
         method: "PATCH",
         body: JSON.stringify({
           email: this.email,
@@ -72,7 +79,6 @@ form {
   text-align: left;
   border-radius: 10px;
   background-color: white;
- 
 }
 label {
   color: rgb(0, 0, 0);
@@ -99,7 +105,7 @@ input {
   color: rgb(0, 0, 0);
   border-radius: 10px;
   cursor: pointer;
-  margin-bottom:50px !important;
+  margin-bottom: 50px !important;
 }
 button:hover {
   opacity: 0.8;
@@ -129,7 +135,7 @@ button:hover {
 }
 .formm {
   width: 50%;
-   margin-top: 70px;
+  margin-top: 70px;
 }
 .cont {
   display: flex;
@@ -137,28 +143,28 @@ button:hover {
   justify-content: center !important;
 }
 
-.subtitlee{
+.subtitlee {
   padding-top: 50px !important;
 }
 @media all and (max-width: 991px) {
   .formm {
-  width: 60%;
-   margin-top: 70px;
-}
+    width: 60%;
+    margin-top: 70px;
+  }
 }
 
 @media all and (max-width: 768px) {
   .formm {
-  width: 70%;
-   margin-top: 70px;
-}
+    width: 70%;
+    margin-top: 70px;
+  }
 }
 
 @media all and (max-width: 576px) {
   .formm {
-  width: 80%;
-   margin-top: 70px;
-}
+    width: 80%;
+    margin-top: 70px;
+  }
 }
 @media all and (max-width: 400px) {
 }

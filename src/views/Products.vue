@@ -29,6 +29,59 @@
                 <option value="ascending">Ascending</option>
                 <option value="descending">Descending</option>
               </select>
+              
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn mt-4 button-body" data-bs-toggle="modal" data-bs-target="#addProductModal">
+             <p class="sub">Add a product</p> 
+            </button>
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                      Add product
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="mb-3">
+                      <label for="addTitle" class="form-label">Title</label>
+                      <input class="form-control" type="text" name="addTitle" id="addTitle" />
+                    </div>
+                    <div class="mb-3">
+                      <label for="" class="form-label">Category</label>
+                      <select class="form-select" name="addCategory" id="addCategory">
+                        <option value="Shoes">Shoes</option>
+                        <option value="Accessories">Accessories</option>
+                        <option value="Clothing">Clothing</option>
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label for="addPrice" class="form-label">Price</label>
+                      <input class="form-control" type="text" name="addPrice" id="addPrice" />
+                    </div>
+                    <div class="mb-3">
+                      <label for="addImg" class="form-label">Image URL</label>
+                      <input class="form-control" type="text" name="addImg" id="addImg" />
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                      Close
+                    </button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="createProduct()">
+                      Create Product
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             </div>
           </div>
         </div>
@@ -44,7 +97,7 @@
               <img :src="product.image" class="card-img-top" alt="..." />
               <div class="card-body">
                 <h4 class="card-title text-black">{{ product.name }}</h4>
-                <p class="card-text text-black">{{ product.cost }}</p>
+                <p class="card-text text-black">R{{ product.cost }}</p>
               </div>
 
               <div class="card-body text-center">
@@ -63,7 +116,7 @@
                 <button
                   type="button"
                   class="btn mx-2 border-dark card-btn"
-                  v-on:click="addItemToCart(product)"
+                  v-on:click="addToCart(index)"
                 >
                   <i class="bi bi-cart2"></i>
                 </button>
@@ -95,28 +148,29 @@
 export default {
   data() {
     return {
+      cart: [],
       products: [
         {
           name: "Cake",
-          cost: "$0.99",
+          cost: "0.99",
           image:
             "https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1089&q=80",
         },
         {
           name: "Cake",
-          cost: "$5.99",
+          cost: "5.99",
           image:
             "https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTh8fGNha2VzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
         },
         {
           name: "Cookies",
-          cost: "$0.99",
+          cost: "0.99",
           image:
             "https://images.unsplash.com/photo-1597733153203-a54d0fbc47de?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1090&q=80",
         },
         {
           name: "Cake",
-          cost: "$5.99",
+          cost: "5.99",
           image:
             "https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80",
         },
@@ -147,14 +201,55 @@ export default {
   //   },
 
   methods: {
-    addToCart(product) {
-      this.$emit("addToCart", product);
+        addToCart(index) {
+      this.cart.push(index);
+    },
+addToCart() {
+fetch('', {
+  method: 'POST',
+  body: JSON.stringify({
+    name: 'Yellow Butter Cake',
+    cost: '',
+    image: 1,
+  }),
+  headers: {
+    'Content-type': 'application/json; charset=UTF-8',
+  },
+})
+        .then((res) => {
+          if (res.status == 201) {
+            swal({
+              text: "Product added in cart",
+              icon: "success",
+            });
+          }
+        })
+        .catch((err) => console.log("err", err));
     },
   },
 };
 </script>
 
 <style scoped>
+.button-body {
+  background: rgb(255 212 0);
+  border: 0;
+  margin-top: 20px;
+  color: rgb(0, 0, 0);
+  border-radius: 10px;
+  cursor: pointer;
+}
+button:hover {
+  opacity: 0.8;
+  background: #000000;
+}
+
+.sub:hover {
+  color: rgb(255, 255, 255) !important;
+}
+.sub {
+  color: rgb(0, 0, 0);
+}
 .sort-content {
   padding: 30px 5px 20px 5px;
 }
@@ -178,5 +273,28 @@ export default {
 }
 .containe {
   justify-content: center !important;
+}
+
+@media all and (max-width: 991px) {
+  .sort {
+    width: 60%;
+    margin-top: 70px;
+  }
+}
+
+@media all and (max-width: 768px) {
+  .sort {
+    width: 70%;
+    margin-top: 70px;
+  }
+}
+
+@media all and (max-width: 576px) {
+  .sort {
+    width: 80%;
+    margin-top: 70px;
+  }
+}
+@media all and (max-width: 400px) {
 }
 </style>

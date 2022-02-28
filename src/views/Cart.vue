@@ -13,11 +13,11 @@
 
       <div class="container">
       <div class="pb-5 justify-content-center">
-        <h1 class="text-center display-6 mb-5 fw-bold subtitlee"><u>Products</u></h1>
+        <h1 class="text-center display-6 mb-5 fw-bold subtitlee"><u>Cart</u></h1>
         <div class="row col-lg-12 proji" style="row-gap: 30px">
           <div
-            v-for="product of products"
-            :key="product.name"
+            v-for="(projects, index) of cart"
+            :key="index"
             class="col-lg-3 col-md-6"
             style="display: flex; justify-content: center"
           >
@@ -33,7 +33,7 @@
                 <button
                   type="button"
                   class="btn mx-2 card-btn btn-danger"
-                  onclick="deleteProduct(${position})"
+                 v-on:click="removeFromCart(product)"
                 >
                  <i class="bi bi-trash3"></i>
                 </button>
@@ -50,17 +50,15 @@ export default {
 
   data: () => {
     return {
-      cart: []
+      
     };
   },
   props: ["cart"],
   methods: {
-    deleteFromCart(product) {
-      this.$emit("removeItemFromCart", product);
-    },
-    removeItemFromCart(product) {
+    removeFromCart(product) {
       this.cart.splice(this.cart.indexOf(product), 1);
     },
+    
   }
 };
 </script>
@@ -73,7 +71,7 @@ export default {
   border-radius: 10px;
 }
 .subtitlee{
-  margin-top:70px ;
+  margin-top:100px ;
 }
 .card-img-top{
     border-radius: 10px;
