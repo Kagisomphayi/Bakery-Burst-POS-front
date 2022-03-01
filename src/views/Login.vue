@@ -10,13 +10,13 @@
           <input
             class="form-input neu-border-inset"
             type="email"
-            v-model="email"
+            v-model="user_email"
           />
           <label class="text-black">Password:</label>
           <input
             class="form-input neu-border-inset"
             type="password"
-            v-model="password"
+            v-model="user_password"
           />
 
           <div class="submit ">
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {

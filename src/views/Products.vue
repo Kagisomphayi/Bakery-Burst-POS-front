@@ -2,7 +2,7 @@
   <!-- projects section -->
   <section id="products" class="products">
     <div class="container">
-      <div class="pb-5 cont justify-content-center">
+      <div  v-if="products" class="pb-5 cont justify-content-center">
         <h1 class="text-center display-6 mb-5 fw-bold subtitlee">
           <u>Products</u>
         </h1>
@@ -70,15 +70,16 @@
                           type="text"
                           name="addName"
                           id="addName"
-                          v-model="user_name"
+                          v-model="product_name"
                         />
                       </div>
                       <div class="mb-3">
-                        <label for="" class="form-label">Category</label>
+                        <label class="form-label">Category</label>
                         <select
                           class="form-select"
                           name="addCategory"
                           id="addCategory"
+                          v-model="product_category"
                         >
                           <option value="Shoes">Cakes</option>
                           <option value="Accessories">Cookies</option>
@@ -92,7 +93,7 @@
                           type="text"
                           name="addPrice"
                           id="addPrice"
-                          v-model="user_price"
+                          v-model="product_price"
                         />
                       </div>
                       <div class="mb-3">
@@ -102,7 +103,7 @@
                           type="text"
                           name="addImg"
                           id="addImg"
-                          v-model="image"
+                          v-model="product_image"
                         />
                       </div>
                     </div>
@@ -137,10 +138,16 @@
             style="display: flex; justify-content: center"
           >
             <div class="card shadow ani-card" style="width: 18rem">
-              <img :src="product.product_image" class="card-img-top" alt="..." />
+              <img
+                :src="product.product_image"
+                class="card-img-top"
+                alt="..."
+              />
               <div class="card-body">
-                <h4 class="card-title text-black">{{ product.product_name }}</h4>
-                <p class="card-text text-black">R{{ product.product.price }}</p>
+                <h4 class="card-title text-black">
+                  {{ product.product_name }}
+                </h4>
+                <p class="card-text text-black">R{{ product.product_price }}</p>
               </div>
 
               <div class="card-body text-center">
@@ -243,7 +250,7 @@
                         />
                       </div>
                     </div>
-                    <div class="modal-footer" >
+                    <div class="modal-footer">
                       <button
                         type="button"
                         class="btn btn-secondary"
@@ -266,7 +273,9 @@
           </div>
         </div>
       </div>
+     <div class="loading" v-else>Loading blogs...</div>
     </div>
+
   </section>
 </template>
 
@@ -278,32 +287,82 @@ export default {
     };
   },
 
-  mounted() {
-    fetch("https://groupapibackend.herokuapp.com/products/" + this.id, {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-      },
-    })
-      .then((response) => response.json())
-      .then(async (json) => {
-        this.products = json;
-        await fetch(
-          "https://groupapibackend.herokuapp.com/users" + json.created_by,
-          {
-            method: "GET",
-            headers: {
-              "Content-type": "application/json; charset=UTF-8",
-              Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-            },
-          }
-        )
-          .then((response) => response.json())
-          .then((json) => {
-            this.products.created_by = json.user_name;
+//   mounted() {
+//      if (localStorage.getItem("jwt")) {
+//     fetch("https://groupapibackend.herokuapp.com/products/", {
+//       method: "GET",
+//       headers: {
+//         "Content-type": "application/json; charset=UTF-8",
+//         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+//       },
+//     })
+//       .then((response) => response.json())
+//       .then( (json) => {
+//         this.products = json;
+//         this.products.forEach(async(product) =>{
+// await fetch(
+//           "https://groupapibackend.herokuapp.com/users" + json.created_by,
+//           {
+//             method: "GET",
+//             headers: {
+//               "Content-type": "application/json; charset=UTF-8",
+//               Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+//             },
+//           }
+//         )
+
+
+//         )
+//           .then((response) => response.json())
+//           .then((json) => {
+//             this.products.created_by = json.user_name;
+//           });
+//       });
+//   })
+//           .catch((err) => {
+//           alert("User not logged in");
+//         });
+//     } else {
+//       alert("User not logged in");
+//       this.$router.push({ name: "Login" });
+//     };
+ 
+ mounted() {
+    if (localStorage.getItem("jwt")) {
+      fetch("https://groupapibackend.herokuapp.com/products/", {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          this.products = json;
+          this.products.forEach(async (product) => {
+            await fetch(
+              "https://groupapibackend.herokuapp.com/users" + product.created_by,
+              {
+                method: "GET",
+                headers: {
+                  "Content-type": "application/json; charset=UTF-8",
+                  Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+                },
+              }
+            )
+              .then((response) => response.json())
+              .then((json) => {
+                product.created_by = json.user_name;
+              });
           });
-      });
+        })
+        .catch((err) => {
+          alert("User not logged in");
+        });
+    } else {
+      alert("User not logged in");
+      this.$router.push({ name: "Login" });
+    }
   },
 
   methods: {
@@ -371,6 +430,10 @@ export default {
 </script>
 
 <style scoped>
+.loading{
+  margin-top:20%;
+  text-align: center;
+}
 .button-body {
   background: rgb(255 212 0);
   border: 0;

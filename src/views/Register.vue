@@ -11,27 +11,27 @@
           <input
             class="form-input neu-border-inset"
             type="text"
-            v-model="name"
+            v-model="user_name"
           />
           <label class="text-black">Email:</label>
           <input
             class="form-input neu-border-inset"
             type="email"
-            v-model="email"
+            v-model="user_email"
           />
 
           <label class="text-black">Contact:</label>
           <input
             class="form-input neu-border-inset"
             type="text"
-            v-model="contact"
+            v-model="user_contactNumber"
           />
 
           <label class="text-black">Password:</label>
           <input
             class="form-input neu-border-inset"
             type="password"
-            v-model="password"
+            v-model="user_password"
           />
 
           <div class="submit mb-3">
@@ -71,7 +71,7 @@ export default {
       })
         .then((response) => response.json())
         .then((json) => {
-          console.log(json)
+          console.log()
           alert("User registered");
           localStorage.setItem("jwt", json.jwt);
           this.$router.push({ name: "Products" });
