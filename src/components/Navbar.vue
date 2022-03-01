@@ -43,7 +43,7 @@
 
           <li class="nav-item register-text rounded">
             <a class="nav-link" href="#"
-              ><router-link class=" nav-text " to="/register"
+              ><router-link class=" nav-text " to="/users"
                 >Register</router-link
               ></a
             >
@@ -64,10 +64,7 @@
               aria-labelledby="navbarDropdown"
             >
               <li><a class="dropdown-item" href="#"><router-link class="" to="/account">View Profile</router-link></a></li>
-              <li>
-                <hr class="dropdown-divider" />
-              </li>
-              <li><a class="dropdown-item" href="#">Delete Accout</a></li>
+
             </ul>
           </li>
         </ul>
