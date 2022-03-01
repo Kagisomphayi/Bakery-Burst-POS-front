@@ -43,7 +43,7 @@
 
           <li class="nav-item register-text rounded">
             <a class="nav-link" href="#"
-              ><router-link class=" nav-text " to="/users"
+              ><router-link class=" nav-text " to="/register"
                 >Register</router-link
               ></a
             >
