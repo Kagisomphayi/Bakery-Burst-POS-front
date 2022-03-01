@@ -155,7 +155,7 @@
                   type="button"
                   class="btn border-dark card-btn"
                   data-bs-toggle="modal"
-                  data-bs-target="#editProduct${position}"
+                  data-bs-target="#updateModal"
                 >
                   <i class="bi bi-pencil-square"></i>
                 </button>
@@ -166,7 +166,95 @@
                 >
                   <i class="bi bi-trash3"></i>
                 </button>
+                <!-- update modal -->
+
               </div>
+                              <div
+                  class="modal fade"
+                  id="updateModal"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                          Edit {{product.name}}
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="mb-3">
+                          <label for="editTitle${position}" class="form-label"
+                            >Name</label
+                          >
+                          <input
+                            class="form-control"
+                            type="text"
+                            name="editTitle${position}"
+                            id="editTitle${position}"
+                            value="${product.title}"
+                          />
+                        </div>
+                        <div class="mb-3">
+                          <label
+                            for="editCategory${position}"
+                            class="form-label"
+                            >Price</label
+                          >
+
+                        </div>
+                        <div class="mb-3">
+                          <label for="editPrice${position}" class="form-label"
+                            >Image</label
+                          >
+                          <input
+                            class="form-control"
+                            type="text"
+                            name="editPrice${position}"
+                            id="editPrice${position}"
+                            value="${product.price}"
+                          />
+                        </div>
+                        <div class="mb-3">
+                          <label for="editImg${position}" class="form-label"
+                            >Image URL</label
+                          >
+                          <input
+                            class="form-control"
+                            type="text"
+                            name="editImg${position}"
+                            id="editImg${position}"
+                            value="${product.img}"
+                          />
+                        </div>
+                      </div>
+                      <div class="modal-footer" style="width: 10px">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-primary"
+                          data-bs-dismiss="modal"
+                  
+                        >
+                          Save changes
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
             </div>
           </div>
         </div>
@@ -218,10 +306,7 @@ export default {
     };
   },
 
-
-
   methods: {
-
     // ADD TO CART
     addToCart(index) {
       this.cart.push(index);
@@ -276,11 +361,10 @@ export default {
           alert(err);
         });
     },
-  // DELETE PRODUCT
+    // DELETE PRODUCT
     removeProduct: function (index) {
-    this.items.splice(index, 1);
-  }
-
+      this.items.splice(index, 1);
+    },
   },
 };
 </script>
