@@ -2,7 +2,7 @@
   <section class="contact-background" id="contact">
     <div class="cont container">
       <div class="justify-content-center formm">
-        <form @submit.prevent="Login" class="contactMe container mt-5">
+        <form @submit.prevent="login" class="contactMe container mt-5">
           <h2 class="text-center display-6 fw-bold mb-3 subtitlee">
             <u>LogIn</u>
           </h2>
@@ -42,17 +42,17 @@
 export default {
   data() {
     return {
-      email: "",
-      password: "",
+      user_email: "",
+      user_password: "",
     };
   },
   methods: {
     login() {
-      fetch("heroku git:remote -a kagisomphayi-personal-blog", {
+      fetch("https://groupapibackend.herokuapp.com/users", {
         method: "PATCH",
         body: JSON.stringify({
-          email: this.email,
-          password: this.password,
+          user_email: this.user_email,
+          user_password: this.user_password,
         }),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
@@ -62,7 +62,7 @@ export default {
         .then((json) => {
           localStorage.setItem("jwt", json.jwt);
           alert("User logged in");
-          this.$router.push({ name: "Blogs" });
+          this.$router.push({ name: "Products" });
         })
         .catch((err) => {
           alert(err);

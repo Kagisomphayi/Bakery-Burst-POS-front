@@ -70,8 +70,20 @@
                           type="text"
                           name="addName"
                           id="addName"
-                          v-model="name"
+                          v-model="user_name"
                         />
+                      </div>
+                      <div class="mb-3">
+                        <label for="" class="form-label">Category</label>
+                        <select
+                          class="form-select"
+                          name="addCategory"
+                          id="addCategory"
+                        >
+                          <option value="Shoes">Cakes</option>
+                          <option value="Accessories">Cookies</option>
+                          <option value="Clothing">Bread</option>
+                        </select>
                       </div>
                       <div class="mb-3">
                         <label for="addPrice" class="form-label">Price</label>
@@ -80,7 +92,7 @@
                           type="text"
                           name="addPrice"
                           id="addPrice"
-                          v-model="price"
+                          v-model="user_price"
                         />
                       </div>
                       <div class="mb-3">
@@ -125,10 +137,10 @@
             style="display: flex; justify-content: center"
           >
             <div class="card shadow ani-card" style="width: 18rem">
-              <img :src="product.image" class="card-img-top" alt="..." />
+              <img :src="product.product_image" class="card-img-top" alt="..." />
               <div class="card-body">
-                <h4 class="card-title text-black">{{ product.name }}</h4>
-                <p class="card-text text-black">R{{ product.cost }}</p>
+                <h4 class="card-title text-black">{{ product.product_name }}</h4>
+                <p class="card-text text-black">R{{ product.product.price }}</p>
               </div>
 
               <div class="card-body text-center">
@@ -167,94 +179,89 @@
                   <i class="bi bi-trash3"></i>
                 </button>
                 <!-- update modal -->
-
               </div>
-                              <div
-                  class="modal fade"
-                  id="updateModal"
-                  tabindex="-1"
-                  aria-labelledby="exampleModalLabel"
-                  aria-hidden="true"
-                >
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">
-                          Edit {{product.name}}
-                        </h5>
-                        <button
-                          type="button"
-                          class="btn-close"
-                          data-bs-dismiss="modal"
-                          aria-label="Close"
-                        ></button>
-                      </div>
-                      <div class="modal-body">
-                        <div class="mb-3">
-                          <label for="editTitle${position}" class="form-label"
-                            >Name</label
-                          >
-                          <input
-                            class="form-control"
-                            type="text"
-                            name="editTitle${position}"
-                            id="editTitle${position}"
-                            value="${product.title}"
-                          />
-                        </div>
-                        <div class="mb-3">
-                          <label
-                            for="editCategory${position}"
-                            class="form-label"
-                            >Price</label
-                          >
-
-                        </div>
-                        <div class="mb-3">
-                          <label for="editPrice${position}" class="form-label"
-                            >Image</label
-                          >
-                          <input
-                            class="form-control"
-                            type="text"
-                            name="editPrice${position}"
-                            id="editPrice${position}"
-                            value="${product.price}"
-                          />
-                        </div>
-                        <div class="mb-3">
-                          <label for="editImg${position}" class="form-label"
-                            >Image URL</label
-                          >
-                          <input
-                            class="form-control"
-                            type="text"
-                            name="editImg${position}"
-                            id="editImg${position}"
-                            value="${product.img}"
-                          />
-                        </div>
-                      </div>
-                      <div class="modal-footer" style="width: 10px">
-                        <button
-                          type="button"
-                          class="btn btn-secondary"
-                          data-bs-dismiss="modal"
+              <div
+                class="modal fade"
+                id="updateModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">
+                        Update {{ product.name }}
+                      </h5>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="mb-3">
+                        <label for="editTitle${position}" class="form-label"
+                          >Name</label
                         >
-                          Close
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-primary"
-                          data-bs-dismiss="modal"
-                  
-                        >
-                          Save changes
-                        </button>
+                        <input
+                          class="form-control"
+                          type="text"
+                          name="editTitle${position}"
+                          id="editTitle${position}"
+                          value="${product.title}"
+                        />
                       </div>
+                      <div class="mb-3">
+                        <label for="editCategory${position}" class="form-label"
+                          >Price</label
+                        >
+                      </div>
+                      <div class="mb-3">
+                        <label for="editPrice${position}" class="form-label"
+                          >Image</label
+                        >
+                        <input
+                          class="form-control"
+                          type="text"
+                          name="editPrice${position}"
+                          id="editPrice${position}"
+                          value="${product.price}"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label for="editImg${position}" class="form-label"
+                          >Image URL</label
+                        >
+                        <input
+                          class="form-control"
+                          type="text"
+                          name="editImg${position}"
+                          id="editImg${position}"
+                          value="${product.img}"
+                        />
+                      </div>
+                    </div>
+                    <div class="modal-footer" >
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        data-bs-dismiss="modal"
+                      >
+                        Save changes
+                      </button>
                     </div>
                   </div>
                 </div>
+              </div>
             </div>
           </div>
         </div>
@@ -267,43 +274,36 @@
 export default {
   data() {
     return {
-      name: "",
-      price: "",
-      image: "",
-      cart: [],
-      products: [
-        {
-          name: "Cake",
-          cost: "0.99",
-          image:
-            "https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1089&q=80",
-        },
-        {
-          name: "Cake",
-          cost: "5.99",
-          image:
-            "https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTh8fGNha2VzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-        },
-        {
-          name: "Cookies",
-          cost: "0.99",
-          image:
-            "https://images.unsplash.com/photo-1597733153203-a54d0fbc47de?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1090&q=80",
-        },
-        {
-          name: "Cake",
-          cost: "5.99",
-          image:
-            "https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80",
-        },
-        {
-          name: "Cup cakes",
-          cost: "$0.99",
-          image:
-            "https://images.unsplash.com/photo-1550617931-e17a7b70dce2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-        },
-      ],
+      products: null,
     };
+  },
+
+  mounted() {
+    fetch("https://groupapibackend.herokuapp.com/products/" + this.id, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+    })
+      .then((response) => response.json())
+      .then(async (json) => {
+        this.products = json;
+        await fetch(
+          "https://groupapibackend.herokuapp.com/users" + json.created_by,
+          {
+            method: "GET",
+            headers: {
+              "Content-type": "application/json; charset=UTF-8",
+              Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+          }
+        )
+          .then((response) => response.json())
+          .then((json) => {
+            this.products.created_by = json.user_name;
+          });
+      });
   },
 
   methods: {
@@ -343,9 +343,10 @@ export default {
       fetch("", {
         method: "POST",
         body: JSON.stringify({
-          name: this.name,
-          price: this.price,
-          image: this.image,
+          product_name: this.product_name,
+          product_price: this.product_price,
+          product_image: this.product_image,
+          product_category: this.product_category,
         }),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
@@ -355,7 +356,7 @@ export default {
         .then((response) => response.json())
         .then((json) => {
           alert("Post Created");
-          this.$router.push({ name: "Blogs" });
+          this.$router.push({ name: "Products" });
         })
         .catch((err) => {
           alert(err);

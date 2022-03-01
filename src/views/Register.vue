@@ -49,21 +49,21 @@
 export default {
   data() {
     return {
-      name: "",
-      email: "",
-      contact: "",
-      password: "",
+      user_name: "",
+      user_email: "",
+      user_contactNumber: "",
+      user_password: "",
     };
   },
   methods: {
     register() {
-      fetch("https://generic-blog-api.herokuapp.com/users", {
+      fetch("https://groupapibackend.herokuapp.com/users", {
         method: "POST",
         body: JSON.stringify({
-          name: this.name,
-          email: this.email,
-          contact: this.contact,
-          password: this.password,
+          user_name: this.user_name,
+          user_email: this.user_email,
+          user_contactNumber: this.user_contactNumber,
+          user_password: this.user_password,
         }),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
@@ -71,9 +71,10 @@ export default {
       })
         .then((response) => response.json())
         .then((json) => {
+          console.log(json)
           alert("User registered");
           localStorage.setItem("jwt", json.jwt);
-          this.$router.push({ name: "Blogs" });
+          this.$router.push({ name: "Products" });
         })
         .catch((err) => {
           alert(err);
