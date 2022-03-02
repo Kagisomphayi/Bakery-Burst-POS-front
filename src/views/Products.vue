@@ -2,7 +2,7 @@
   <!-- projects section -->
   <section id="products" class="products">
     <div class="container">
-      <div  v-if="products" class="pb-5 cont justify-content-center">
+      <div v-if="products" class="pb-5 cont justify-content-center">
         <h1 class="text-center display-6 mb-5 fw-bold subtitlee">
           <u>Products</u>
         </h1>
@@ -47,7 +47,6 @@
                 tabindex="-1"
                 aria-labelledby="exampleModalLabel"
                 aria-hidden="true"
-                @submit.prevent="createProduct"
               >
                 <div class="modal-dialog">
                   <div class="modal-content">
@@ -116,9 +115,10 @@
                         Close
                       </button>
                       <button
-                        type="submit"
+                        type="button"
                         class="btn btn-primary"
                         data-bs-dismiss="modal"
+                        :onclick="createProduct()"
                       >
                         Create Product
                       </button>
@@ -132,8 +132,8 @@
 
         <div class="row col-lg-12 proji" style="row-gap: 30px">
           <div
-            v-for="(product, index) in products"
-            :key="index"
+            v-for="(product, product_id) in products"
+            :key="product_id"
             class="col-lg-3 col-md-6"
             style="display: flex; justify-content: center"
           >
@@ -148,6 +148,7 @@
                   {{ product.product_name }}
                 </h4>
                 <p class="card-text text-black">R{{ product.product_price }}</p>
+                <p class="card-text text-black">{{ product._id }}</p>
               </div>
 
               <div class="card-body text-center">
@@ -181,7 +182,7 @@
                 <button
                   type="button"
                   class="btn border-dark mx-2 card-btn"
-                  v-on:click="removeProduct(index)"
+                  v-on:click="removeProduct(product)"
                 >
                   <i class="bi bi-trash3"></i>
                 </button>
@@ -198,7 +199,7 @@
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="exampleModalLabel">
-                        Update {{ product.name }}
+                        Update {{ product.product_name }}
                       </h5>
                       <button
                         type="button"
@@ -217,24 +218,31 @@
                           type="text"
                           name="editTitle${position}"
                           id="editTitle${position}"
-                          value="${product.title}"
+                          v-model="product.product_name"
                         />
                       </div>
                       <div class="mb-3">
                         <label for="editCategory${position}" class="form-label"
                           >Price</label
                         >
+                        <input
+                          class="form-control"
+                          type="text"
+                          name="editPrice${position}"
+                          id="editPrice${position}"
+                          v-model="product.product_price"
+                        />
                       </div>
                       <div class="mb-3">
                         <label for="editPrice${position}" class="form-label"
-                          >Image</label
+                          >Category</label
                         >
                         <input
                           class="form-control"
                           type="text"
                           name="editPrice${position}"
                           id="editPrice${position}"
-                          value="${product.price}"
+                          v-model="product.product_category"
                         />
                       </div>
                       <div class="mb-3">
@@ -246,7 +254,7 @@
                           type="text"
                           name="editImg${position}"
                           id="editImg${position}"
-                          value="${product.img}"
+                          v-model="product.product_image"
                         />
                       </div>
                     </div>
@@ -273,9 +281,8 @@
           </div>
         </div>
       </div>
-     <div class="loading" v-else>Loading blogs...</div>
+      <div class="loading" v-else></div>
     </div>
-
   </section>
 </template>
 
@@ -287,47 +294,7 @@ export default {
     };
   },
 
-//   mounted() {
-//      if (localStorage.getItem("jwt")) {
-//     fetch("https://groupapibackend.herokuapp.com/products/", {
-//       method: "GET",
-//       headers: {
-//         "Content-type": "application/json; charset=UTF-8",
-//         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-//       },
-//     })
-//       .then((response) => response.json())
-//       .then( (json) => {
-//         this.products = json;
-//         this.products.forEach(async(product) =>{
-// await fetch(
-//           "https://groupapibackend.herokuapp.com/users" + json.created_by,
-//           {
-//             method: "GET",
-//             headers: {
-//               "Content-type": "application/json; charset=UTF-8",
-//               Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-//             },
-//           }
-//         )
-
-
-//         )
-//           .then((response) => response.json())
-//           .then((json) => {
-//             this.products.created_by = json.user_name;
-//           });
-//       });
-//   })
-//           .catch((err) => {
-//           alert("User not logged in");
-//         });
-//     } else {
-//       alert("User not logged in");
-//       this.$router.push({ name: "Login" });
-//     };
- 
- mounted() {
+  mounted() {
     if (localStorage.getItem("jwt")) {
       fetch("https://groupapibackend.herokuapp.com/products/", {
         method: "GET",
@@ -339,9 +306,11 @@ export default {
         .then((response) => response.json())
         .then((json) => {
           this.products = json;
+          console.log(json);
           this.products.forEach(async (product) => {
             await fetch(
-              "https://groupapibackend.herokuapp.com/users" + product.created_by,
+              "https://groupapibackend.herokuapp.com/users" +
+                product.created_by,
               {
                 method: "GET",
                 headers: {
@@ -393,13 +362,41 @@ export default {
         .catch((err) => console.log("err", err));
     },
 
+    // UPDATE ONE PRODUCTS
+    updateProduct() {
+      fetch(
+        "https://groupapibackend.herokuapp.com/products" + this.product_id,
+        {
+          method: "PUT",
+          body: JSON.stringify({
+            product_name: this.product_name,
+            product_price: this.product_price,
+            product_category: this.product_category,
+            product_image: this.product_image,
+          }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+          },
+        }
+      )
+        .then((response) => response.json())
+        .then((json) => {
+          alert("Product Created");
+          this.$router.push({ name: "Products" });
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    },
+
     // CREATE PRODUCT
     createProduct() {
       if (!localStorage.getItem("jwt")) {
         alert("User not logged in");
         return this.$router.push({ name: "Login" });
       }
-      fetch("", {
+      fetch("https://groupapibackend.herokuapp.com/products", {
         method: "POST",
         body: JSON.stringify({
           product_name: this.product_name,
@@ -414,7 +411,6 @@ export default {
       })
         .then((response) => response.json())
         .then((json) => {
-          alert("Post Created");
           this.$router.push({ name: "Products" });
         })
         .catch((err) => {
@@ -422,17 +418,59 @@ export default {
         });
     },
     // DELETE PRODUCT
+
     removeProduct: function (index) {
-      this.items.splice(index, 1);
+      fetch("https://groupapibackend.herokuapp.com/products/" , {
+        method: "DELETE",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+        
+      });
+console.log(index)
+      // this.products.splice(this.index, 1);
     },
+    //     deleteEvent: function(event) {
+    //   this.events.splice(this.events.indexOf(event), 1);
+    // }
   },
 };
 </script>
 
 <style scoped>
-.loading{
-  margin-top:20%;
-  text-align: center;
+.loading {
+  margin-top: 20%;
+  justify-content: center;
+}
+.loading {
+  border: 16px solid #f3f3f3;
+  position: fixed;
+  top: 5%;
+  left: 50%;
+  border-radius: 50%;
+  border-top: 16px solid #000000;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 .button-body {
   background: rgb(255 212 0);
@@ -489,6 +527,18 @@ button:hover {
   .sort {
     width: 70%;
     margin-top: 70px;
+  }
+  .loading {
+    border: 16px solid #f3f3f3;
+    position: fixed;
+    top: 30%;
+    left: 32%;
+    border-radius: 50%;
+    border-top: 16px solid #000000;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
   }
 }
 

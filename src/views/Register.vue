@@ -74,7 +74,7 @@ export default {
           console.log()
           alert("User registered");
           localStorage.setItem("jwt", json.jwt);
-          this.$router.push({ name: "Products" });
+          this.$router.push({ name: "Login" });
         })
         .catch((err) => {
           alert(err);
