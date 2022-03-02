@@ -63,7 +63,7 @@
               class="dropdown-menu dropdown-menu-end"
               aria-labelledby="navbarDropdown"
             >
-              <li><a class="dropdown-item" href="#"><router-link class="" to="/account">View Profile</router-link></a></li>
+              <li><a class="dropdown-item" href="#"><router-link class="" to="/users">View Users</router-link></a></li>
 
             </ul>
           </li>
