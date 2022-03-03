@@ -5,7 +5,7 @@
    <h2 class="subtitlee" style="text-align: center">Users</h2>
 
 <div class="row col-lg-12 proji" style="row-gap: 10px; column-gap:1px">
-  <div class="card pt-5 col-lg-3 col-md-6" v-for="(user, _id) in users" :key="_id">
+  <div class="card pt-5 col-lg-3 col-md-6" v-for="(user) in users" :key="user._id">
     <h1>{{ user.user_name }}</h1>
     <p class="title">{{ user.user_email }}</p>
     <p>{{ user.user_contactNumber }}</p>
@@ -14,7 +14,7 @@
     <button
       type="button"
       class="btn mx-2 card-btn"
-      v-on:click="deleteUser(_id)"
+      @click.prevent="deleteUser(user._id)"
     >
       <i class="bi bi-trash3"></i>
     </button>
@@ -63,18 +63,25 @@ export default {
       });
   },
   methods:{
-        deleteUser: function (_id) {
-      fetch("https://groupapibackend.herokuapp.com/users/" + _id , {
-        method: "DELETE",
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-        },
-        
-      });
-        console.log(_id)
-      // this.products.splice(this.index, 1);
+    // DELETE PRODUCT(done)
+    deleteUser() {
+      let apiURL = `https://groupapibackend.herokuapp.com/users/${id}`;
+
+      let indexOfArrayItem = this.users.findIndex((i) => i._id === id);
+
+      if (window.confirm("Do you really want to delete?")) {
+        axios
+          .delete(apiURL)
+          .then(() => {
+            this.users.splice(indexOfArrayItem, 1);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
+
+
   }
 };
 </script>
